@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow — Premium To-Do App</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+    </div>
+
+    <main class="app">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+                <div class="logo-icon">✓</div>
+
+                <div>
+                    <h1>TaskFlow</h1>
+                    <span>Personal Productivity</span>
+                </div>
+            </div>
+
+            <nav class="navigation">
+
+                <button class="nav-item active" data-filter="all">
+                    <span>▣</span>
+                    <div>
+                        <strong>All Tasks</strong>
+                        <small id="navAll">0</small>
+                    </div>
+                </button>
+
+                <button class="nav-item" data-filter="active">
+                    <span>◷</span>
+                    <div>
+                        <strong>Active</strong>
+                        <small id="navActive">0</small>
+                    </div>
+                </button>
+
+                <button class="nav-item" data-filter="completed">
+                    <span>✓</span>
+                    <div>
+                        <strong>Completed</strong>
+                        <small id="navCompleted">0</small>
+                    </div>
+                </button>
+
+                <button class="nav-item" data-filter="high">
+                    <span>★</span>
+                    <div>
+                        <strong>High Priority</strong>
+                        <small id="navHigh">0</small>
+                    </div>
+                </button>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="productivity-card">
+
+                    <div class="productivity-top">
+                        <span>Today's progress</span>
+                        <strong id="progressPercent">0%</strong>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div id="progressFill"></div>
+                    </div>
+
+                    <p>Keep going. You've got this! 🚀</p>
+
+                </div>
+
+                <button class="theme-btn" id="themeToggle">
+                    <span id="themeIcon">☾</span>
+                    <span>Toggle Theme</span>
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+
+        <section class="content">
+
+            <!-- HEADER -->
+
+            <header class="header">
+
+                <div>
+                    <p class="greeting">Good day 👋</p>
+                    <h2>Manage your tasks</h2>
+                    <p class="date" id="currentDate"></p>
+                </div>
+
+                <button class="add-header-btn" id="openModal">
+                    <span>+</span>
+                    Add Task
+                </button>
+
+            </header>
+
+
+            <!-- STATISTICS -->
+
+            <section class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-icon purple">▣</div>
+                    <div>
+                        <span>Total Tasks</span>
+                        <strong id="totalTasks">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">◷</div>
+                    <div>
+                        <span>Active</span>
+                        <strong id="activeTasks">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">✓</div>
+                    <div>
+                        <span>Completed</span>
+                        <strong id="completedTasks">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">★</div>
+                    <div>
+                        <span>High Priority</span>
+                        <strong id="highTasks">0</strong>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- TASK AREA -->
+
+            <section class="task-section">
+
+                <div class="task-toolbar">
+
+                    <div>
+                        <h3 id="taskTitle">All Tasks</h3>
+                        <p id="taskSubtitle">Everything you need to get done</p>
+                    </div>
+
+                    <div class="toolbar-right">
+
+                        <div class="search-box">
+                            <span>⌕</span>
+                            <input
+                                type="text"
+                                id="searchInput"
+                                placeholder="Search tasks..."
+                            >
+                        </div>
+
+                        <select id="sortSelect">
+                            <option value="newest">Newest</option>
+                            <option value="oldest">Oldest</option>
+                            <option value="priority">Priority</option>
+                            <option value="due">Due date</option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TASK LIST -->
+
+                <div class="task-list" id="taskList">
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">✓</div>
+
+                        <h3>No tasks yet</h3>
+
+                        <p>
+                            Add your first task and start being productive.
+                        </p>
+
+                        <button id="emptyAddBtn">
+                            + Create your first task
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+    <!-- ADD TASK MODAL -->
+
+    <div class="modal-overlay" id="modalOverlay">
+
+        <div class="modal">
+
+            <div class="modal-header">
+
+                <div>
+                    <h3 id="modalTitle">Create Task</h3>
+                    <p>Add something you want to accomplish.</p>
+                </div>
+
+                <button class="close-btn" id="closeModal">×</button>
+
+            </div>
+
+
+            <form id="taskForm">
+
+                <input type="hidden" id="editTaskId">
+
+                <div class="form-group">
+
+                    <label>Task title</label>
+
+                    <input
+                        type="text"
+                        id="taskInput"
+                        placeholder="What needs to be done?"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Description</label>
+
+                    <textarea
+                        id="taskDescription"
+                        placeholder="Add some details..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>Priority</label>
+
+                        <select id="priorityInput">
+
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Category</label>
+
+                        <select id="categoryInput">
+
+                            <option value="Personal">Personal</option>
+                            <option value="Work">Work</option>
+                            <option value="Study">Study</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Other">Other</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Due date</label>
+
+                    <input type="date" id="dueDate">
+
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        id="cancelModal"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+                        Save Task
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOAST -->
+
+    <div class="toast" id="toast"></div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
